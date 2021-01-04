@@ -1,0 +1,45 @@
+
+server:
+  port: 8200
+
+spring:
+  application:
+    name: Touryaar-Backend
+  profiles:
+    active: pgsql
+  jpa:
+    generate-ddl: false
+    hibernate:
+      ddl-auto: update
+  liquibase:
+    change-log: "classpath:/db.changelog/db.changelog-master.yml"
+    enabled: true
+
+logging:
+  level:
+    root: INFO
+
+---
+
+### PgSQL profile
+
+spring:
+  profiles: pgsql
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/touryaar-backend}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:12211221}
+
+---
+
+### Debug profile
+
+spring:
+  profiles: debug
+
+logging:
+  level:
+    org.hibernate:
+      SQL: DEBUG
+      type.descriptor.sql.BasicBinder: TRACE
+
